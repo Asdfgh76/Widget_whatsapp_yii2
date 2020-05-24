@@ -12,10 +12,11 @@
 ## Изменение изображения виджета
 
 Изменить изображение виджета можно в файле components/views/whatsapp.php
-
+```
 //Вставьте сюда нужное изображение
 
 <img id = "imgwhatsapp"  src="https://ex-in.ru/img/whatsapp_icon.png" alt="WhatsApp">
+```
 
 ## Использование
 
