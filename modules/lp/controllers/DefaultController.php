@@ -15,8 +15,10 @@ class DefaultController extends Controller
      * @param int $id
      *
      */
-    public function actionView($id)
+    public function actionView($pages_id)
     {
-        return $this->render('view');
+        return $this->render('view', [
+            'pages_id' => $pages_id
+        ]);
     }
 }

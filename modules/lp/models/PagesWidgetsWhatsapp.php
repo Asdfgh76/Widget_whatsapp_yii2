@@ -3,6 +3,8 @@
 namespace app\modules\lp\models;
 
 use Yii;
+use yii\db\Query;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "pages_widgets_whatsapp".
@@ -55,6 +57,20 @@ class PagesWidgetsWhatsapp extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return void
+     */
+    public function sample()
+    {
+        $query = new Query();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query->select(['pages.id AS pages_id', 'pages.domain', 'pages_widgets_whatsapp.id', 'pages_widgets_whatsapp.phone', 'pages_widgets_whatsapp.label',
+            'pages_widgets_whatsapp.pulse'])->from('pages')->innerJoin('pages_widgets_whatsapp',
+             'pages.id = pages_widgets_whatsapp.page_id'),
+        ]);
+        return $dataProvider;
+    }
+
+    /**
      * Gets query for [[Page]].
      *
      * @return \yii\db\ActiveQuery
@@ -62,5 +78,44 @@ class PagesWidgetsWhatsapp extends \yii\db\ActiveRecord
     public function getPage()
     {
         return $this->hasOne(Pages::className(), ['id' => 'page_id']);
+    }
+
+    /**
+     * @param mixed $label
+     * 
+     * @return void
+     */
+    public function isLabel($label)
+    {
+        if (empty($label)) {
+            echo "<style> #whatsappFixedWidgetTooltip {display:none;} </style>";
+        }
+
+    }
+
+    /**
+     * @param mixed $pulse
+     * 
+     * @return void
+     */
+    public function isPulse($pulse)
+    {
+        if ($pulse == 1) {
+            echo "<style> #imgwhatsapp {animation: radial-pulse 1s infinite;} </style>";
+        }
+
+    }
+
+    /**
+     * @param mixed $phone
+     * 
+     * @return void
+     */
+    public function printPhone($phone)
+    {
+        if ($phone) {
+            $phone = (int) $phone;
+        }
+        return $phone;
     }
 }

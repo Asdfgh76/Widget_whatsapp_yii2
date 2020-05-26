@@ -1,6 +1,6 @@
 <?php
 
-namespace app\components;
+namespace app\modules\lp\components;
 
 use yii\base\Widget;
 use app\modules\lp\models\PagesWidgetsWhatsapp;
@@ -11,31 +11,30 @@ use app\modules\lp\models\PagesWidgetsWhatsapp;
 class WhatsappWidget extends Widget
 {
     public $page_id;
-    public $model;
 
+    
+    public function init()
+    {
+
+        parent::init();
+
+    }
+    
     /**
      * Выборка данных из таблицы по $this->page_id
      * 
      * @param int $this->page_id
      *
-     * @return array $this->model
+     * @return array $model
+     *
      */
-    public function init(){
-        parent::init();
-
-        $this->model = PagesWidgetsWhatsapp::find()
+    public function run()
+    {
+        $model = PagesWidgetsWhatsapp::find()
         ->where(['page_id' => $this->page_id])
         ->one();
-  
-    }
-    
-    /**
-     * Возвращаем результат
-     *
-     * @return array $$this->model
-     */
-    public function run(){
-        return $this->render('whatsapp', ['models' => $this->model]);
+
+        return $this->render('whatsappWidget', ['model' => $model]);
     }
 }
 ?>

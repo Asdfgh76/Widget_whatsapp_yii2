@@ -3,8 +3,14 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/** 
+* @var $this yii\modules\lp\views\widget 
+*
+* @param array $model 
+* @param array $pages
+* @param array $params
+* @var $dataProvider yii\data\ActiveDataProvider 
+*/
 
 $this->title = 'Виджеты';
 $this->params['breadcrumbs'][] = $this->title;
@@ -48,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return Html::a('<span class="glyphicon glyphicon-pencil"></span>',['/lp/widgets/update?id='.$model['id'].'']);
             },
                 'view'=>function ($url, $model, $key) {
-                return Html::a('<span class="glyphicon glyphicon-eye-open"></span>',['/lp/default/view?id='.$model['pages_id'].'']);
+                return Html::a('<span class="glyphicon glyphicon-eye-open"></span>',['/lp/default/view?pages_id='.$model['pages_id'].'']);
             },
                 'delete'=>function ($url, $model, $key) {
                 return Html::a('<span class="glyphicon glyphicon-trash"></span>',['/lp/widgets/delete?id='.$model['id'].'']);

@@ -2,11 +2,11 @@
 
 namespace app\modules\lp\controllers;
 
+use Yii;
 use app\modules\lp\models\Pages;
 use app\modules\lp\models\PagesWidgetsWhatsapp;
 use yii\helpers\ArrayHelper;
-use Yii;
-use yii\data\SqlDataProvider;
+
 
 /**
  * Контроллер создания виджета Whatsapp
@@ -27,15 +27,10 @@ class WidgetsController extends \yii\web\Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new SqlDataProvider([
-            'sql' => 'SELECT pages.id AS pages_id, pages.domain, pages_widgets_whatsapp.id, pages_widgets_whatsapp.phone, pages_widgets_whatsapp.label,
-            pages_widgets_whatsapp.pulse
-            FROM
-            pages
-            INNER JOIN 
-            pages_widgets_whatsapp
-            ON pages.id = pages_widgets_whatsapp.page_id',
-        ]);
+        $data = new PagesWidgetsWhatsapp();
+        
+        $dataProvider = $data->sample();
+        
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -44,45 +39,47 @@ class WidgetsController extends \yii\web\Controller
     /**
      * Запись данных из формы создания виджета
      *
-     * @return array $models 
-     * @return array $pages
-     * @return array $params
+     * @return void
      */
     public function actionWhatsapp()
     {
-        $models = new PagesWidgetsWhatsapp();
+        $model = new PagesWidgetsWhatsapp();
         
         $pages = Pages::find()->all();
         $pages = ArrayHelper::map($pages,'id','domain');
         $params = ['prompt'=>'Выберите сайт'];
 
-        if ($models->load(Yii::$app->request->post()) && $models->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()){
             return $this->redirect(['index']);
         }
 
-        return $this->render('whatsapp', ['models' => $models, 'pages' => $pages, 'params' => $params]);
+        return $this->render('whatsapp', [
+            'model' => $model, 
+            'pages' => $pages, 
+            'params' => $params
+            ]);
     }
 
     /**
-     * Запись измененных данных виджета
-     *
-     * @param int $id
+     * @param mixed $id
      * 
-     * @return array $models 
-     * @return array $pages
-     * @return array $params
+     * @return void
      */
     public function actionUpdate($id)
     {
-        $models = PagesWidgetsWhatsapp::findOne($id);
+        $model = PagesWidgetsWhatsapp::findOne($id);
         
-        if ($models->load(Yii::$app->request->post()) && $models->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
         $pages = Pages::find()->all();
         $pages = ArrayHelper::map($pages,'id','domain');
         $params = ['prompt'=>'Выберите сайт'];
-        return $this->render('update', ['models' => $models, 'pages' => $pages, 'params' => $params]);
+        return $this->render('update', [
+            'model' => $model,
+            'pages' => $pages,
+            'params' => $params
+            ]);
     }
 
     /**
@@ -99,3 +96,4 @@ class WidgetsController extends \yii\web\Controller
     }
 
 }
+

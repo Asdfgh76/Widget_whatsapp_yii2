@@ -1,16 +1,17 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-use app\components\WhatsappWidget;
+use app\modules\lp\components\WhatsappWidget;
 
-/* @var $this yii\web\View */
-/* @var $model common\modules\dishes\models\backend\Ingredient */
+/** 
+* @var $this yii\modules\lp\views\default
+*
+* @param int $pages_id
+*/
 
 ?>
 <!--Подключаем виджет Whatsapp-->
 <div class="widget-view">
 
-    <?php echo WhatsappWidget::widget(['page_id' => $_GET['id']]); ?>
+    <?php echo WhatsappWidget::widget(['page_id' => $pages_id]); ?>
 
 </div>
