@@ -6,7 +6,7 @@ use yii\helpers\Html;
 ?>
 <?php
 //Если текста нет, то блок span не выводим
- $model->isLabel($model->label);
+    $model->isLabel($model->label);
 ?>
 <div id="whatsappFixedWidget" style="position:fixed;bottom:150px;right:50px;width:50px;height:50px;z-index:9999;">
 <a href="https://wa.me/<?= $model->printPhone($model->phone) ?>" title="WhatsApp" target="_blank">
