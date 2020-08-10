@@ -50,7 +50,7 @@ class Pages extends \yii\db\ActiveRecord
      */
     public function getPagesWidgetsWhatsapp()
     {
-        return $this->hasOne(PagesWidgetsWhatsapp::className(), [
+        return $this->hasOne(PagesWidgetsWhatsapp::class, [
             'page_id' => 'id'
             ]);
     }

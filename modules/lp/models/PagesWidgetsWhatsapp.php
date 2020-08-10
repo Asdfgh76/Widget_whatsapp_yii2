@@ -38,7 +38,7 @@ class PagesWidgetsWhatsapp extends \yii\db\ActiveRecord
             [['phone'], 'string', 'max' => 20],
             [['label'], 'string', 'max' => 255],
             [['page_id'], 'unique'],
-            [['page_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pages::className(), 'targetAttribute' => ['page_id' => 'id']],
+            [['page_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pages::class, 'targetAttribute' => ['page_id' => 'id']],
         ];
     }
 
@@ -63,10 +63,12 @@ class PagesWidgetsWhatsapp extends \yii\db\ActiveRecord
     {
         $query = new Query();
         $dataProvider = new ActiveDataProvider([
-            'query' => $query->select(['pages.id AS pages_id', 'pages.domain', 'pages_widgets_whatsapp.id', 'pages_widgets_whatsapp.phone', 'pages_widgets_whatsapp.label',
-            'pages_widgets_whatsapp.pulse'])->from('pages')->innerJoin('pages_widgets_whatsapp',
-             'pages.id = pages_widgets_whatsapp.page_id'),
-        ]);
+            'query' => $query->select([
+                'pages.id AS pages_id', 'pages.domain', 'pages_widgets_whatsapp.id', 'pages_widgets_whatsapp.phone', 'pages_widgets_whatsapp.label',
+                'pages_widgets_whatsapp.pulse'])
+                ->from('pages')
+                ->innerJoin('pages_widgets_whatsapp','pages.id = pages_widgets_whatsapp.page_id'),
+            ]);
         return $dataProvider;
     }
 
@@ -77,7 +79,7 @@ class PagesWidgetsWhatsapp extends \yii\db\ActiveRecord
      */
     public function getPage()
     {
-        return $this->hasOne(Pages::className(), ['id' => 'page_id']);
+        return $this->hasOne(Pages::class, ['id' => 'page_id']);
     }
 
     /**
@@ -90,7 +92,6 @@ class PagesWidgetsWhatsapp extends \yii\db\ActiveRecord
         if (empty($label)) {
             echo "<style> #whatsappFixedWidgetTooltip {display:none;} </style>";
         }
-
     }
 
     /**
@@ -103,7 +104,6 @@ class PagesWidgetsWhatsapp extends \yii\db\ActiveRecord
         if ($pulse == 1) {
             echo "<style> #imgwhatsapp {animation: radial-pulse 1s infinite;} </style>";
         }
-
     }
 
     /**
