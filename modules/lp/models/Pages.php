@@ -52,6 +52,6 @@ class Pages extends \yii\db\ActiveRecord
     {
         return $this->hasOne(PagesWidgetsWhatsapp::class, [
             'page_id' => 'id'
-            ]);
+        ]);
     }
 }
